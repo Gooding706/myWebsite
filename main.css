@@ -1,0 +1,74 @@
+@font-face {
+  font-family: "IBM-Mono";
+  src: url(fonts/IBM.woff);
+}
+
+body
+{
+  margin: 0;
+  padding: 0;
+  background-color: black;
+}
+
+
+.fakeinput
+{
+  height: auto;
+  width: 100%;
+  max-width: 800px;
+
+  h1 {
+    margin: 5px;
+    font-family: "IBM-Mono";
+    font-size: 20px;
+    white-space: pre-wrap;
+    color: white;
+  }
+
+  a{
+    margin: 5px;
+    font-family: "IBM-Mono";
+    font-size: 20px;
+    white-space: pre-wrap;
+    color: white;
+  }
+
+  #WorkingLine {
+    height: auto;
+    display: flex;
+    align-items: flex-end;
+    h1{ 
+      display:inline-block; 
+      word-wrap: break-word;
+      white-space: pre;}
+  }
+
+  #previous{
+    
+    display: flex;
+    flex-direction: column;
+ 
+  }
+}
+
+.cursor
+{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 10px;
+  height: 20px;
+  background-color: white;
+  animation-name: blink;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: step-start;
+
+  display:inline-block; 
+}
+
+@keyframes blink
+{
+  50% {
+    opacity: 0;
+  }
+}

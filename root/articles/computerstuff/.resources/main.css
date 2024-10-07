@@ -1,0 +1,45 @@
+body{
+    font-family: 'Times New Roman', Times, serif;
+    margin-left: 150px;
+    margin-right: 150px;
+
+    line-height: 15px;
+
+    color: white;
+    background-color: black;
+}
+
+.content
+{
+    line-height: 24pt;
+    font-size: 12pt;
+    p{
+        text-indent: 50px;
+    };
+
+    
+    margin-top: 25px;
+    margin-bottom: 100px;
+
+}
+
+.cover{
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    
+    text-align: center;
+    a{
+        color: white;
+    }
+}
+math{
+    line-height: default;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+}
+code{
+    line-height: 20px;
+}
+

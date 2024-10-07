@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+
+<html lang="eng">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./.resources/main.css">
+    <!--Syntax Highlighting-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <!--Syntax Highlighting-->
+
+
+</head>
+
+<body>
+
+    <h1>Understanding Asymptotic Notation</h1>
+    <h2>A Hero's Journey</h2>
+    <p>By Owen Resnikoff</p>
+
+    <hr>
+    <div class="cover">
+        <img src="https://imgs.xkcd.com/comics/complexity_analysis.png" alt="An xkcd comic">
+        <p>comic by <a href="https://xkcd.com/2939/">xkcd</a></p>
+    </div>
+
+    <div class="content">
+
+
+
+        <h3>Background</h3>
+        <p>Asymptotic Notation is something I have struggled with throughout my time learning computer science. The main
+            concept isn't extremely confusing however there are intricacies to it that make things a little more
+            confusing. In this article I intend to not only explain Asymptotic Notation to the reader but to also come
+            to a better understanding of it myself.</p>
+
+        <h3>The Basics</h3>
+        <p>When we use the term Asymptotic Notation in the context of computer science we do so because it is useful to
+            understand how an algorithm's performance is affected with a variable number of inputs. Despite the use of
+            this notation being primarily in the field of Computer Science, the definition can be understood completely
+            mathematically. Essentially all Asymptotic Notation does is define a boundary function for a given function.
+            For example if we have a function f(n) we can say that cg(n) acts as a boundary to f(n) from some value of k
+            onward. If that definition is still confusing that's ok, things will become more clear as we delve into some
+            real world examples.</p>
+
+        <h3>Ω(n) Notation(The Lower Bound)</h3>
+        <p>Ω(n) Notation is what we use when we want to describe the lower bound of a given function. The formal
+            definition of this bound is as such: given a function f(n), Ω(g(n)) is true for f(n) iff 0 < cg(n) ≤ f(n) on
+                the interval k ≤ n, where c and k are both constants. This is a lot of math so let's break it down into
+                something more digestible. In a very basic sense we are enforcing rules that g(n) must satisfy in order
+                for it to be Ω(g(n)) for a given function f(n). This is to say that g(n), the function inside of
+                Ω(g(n)), is dependent on f(n). f(n) can be anything but for Ω(g(n)) to be true for that given function
+                f(n) certain conditions must be met by g(n). So what are those conditions? It turns out we have pretty
+                clearly defined them in our formula. First, when looking at our conditions I think it is important to
+                note that these conditions must only be met on some interval where k ≤ n, this is to say as long as all
+                other conditions are true at one point(when n=some number k), and continue to stay true at all points
+                following, then the function Ω(g(n)) is true for the given function f(n). This specification regarding
+                the interval is an important part of how we utilize Ω(g(n)) as it is the reason we use the term
+                Asymptotic Notation. Because the conditions must be true for all n past a specific value cg(n) satisfys
+                the condition as the function approaches infinity. The conditions g(n) must meet are not that complex 0
+                < cg(n) simply states that g(n) multiplied by some constant c is greater than 0. This condition doesn't
+                do much heavy lifting but it does eliminate some strange edge cases, for instance if negative numbers
+                weren't excluded every function would fit the condition as even a function that grows extremely fast
+                will be below any given function f(n) if c is negative. This brings us quite conveniently to the next
+                part of the condition cg(n) ≤ f(n). All this says is that g(n) scaled by some constant c will eventually
+                be below the function f(n) and stay that way. As you can hopefully now see, this somewhat scary equation
+                defines a fairly simple concept. </p>
+
+                <h3>O(n) Notation(The Upper Bound)</h3>
+                <p>Now that we understand Ω(n) it is fairly trivial to define O(n). O(n) has the same idea as Ω(n)
+                    except that it gives us an upper bound rather than a lower bound. this means that it is
+                    mathematically defined as such: given a function f(n), O(g(n)) is true for f(n) iff f(n) ≤ cg(n) on
+                    the interval k ≤ n, where c and k are both constants. I wont go into depth explaining the math on
+                    this one as it is simply the opposite of Ω(n). What is important to mention is why O(n) notation is
+                    so commonly used and what it means in the case of algorithms. Computer Scientists are pessimistic,
+                    when generalizing an algorithm's performance on any set of data looking at the best case doesn't
+                    tell the full story. For instance it may be true that searching through an unsorted array can take
+                    only one operation but this is the best case and is therefore not extremely useful. It is much
+                    better to focus on our algorithm's worst case scenario as that is more helpful in deciding how good
+                    an algorithm actually is. It is for this reason O(n) notation is so prevalent. We can use it to
+                    define the upper bound of an algorithm's run time and in guaranteeing the algorithm never takes
+                    longer than that upper bound for a given number of inputs we can describe the algorithms worst case
+                    scenario. O(n) is so widely used that it is what this article will primarily focus on.</p>
+
+                <h3>Ө(n) Notation(Both Bounds In One)</h3>
+                <p>Ө(n) Notation is simply a combination of the other two except it defines a function g(n) that can be
+                    both an upper and lower bound given two different constants as scaling factors. Ө(n) is formally
+                    defined as such: given a function f(n), Ω(g(n)) is true for f(n) iff 0 < c1g(n) ≤ f(n) ≤ c2g(n) on
+                        the interval k ≤ n, where c1, c2 and k are constants. Average case is calculated by taking the
+                        sum of all posible cases and dividing by the number of cases, this is a bit more difficult in
+                        practice unfortunately. I wont get too deep into Ө(n) however it is important to understand what
+                        it means when you see Ө(n) in the wild.</p>
+
+                        <h3>A Note On Looseness</h3>
+                        <p>If you are especially astute in the art of nitpicking you may have noticed that there is
+                            something preventing us from blindly using the formulas defined above for our bounds. The
+                            issue is to do with how loose our bound can be. If we have a function f(n) = n, O(n!) is
+                            technically valid, however it is not a good representation of the worst case scenario. It is
+                            for this reason that it would be more accurate to use O(n) to bound f(n) as it acts as a
+                            much tighter bound. This is to say that despite the fact that we technically can choose very
+                            large function and have them fit with the conditions defined by the formulas, it is in our
+                            best interest to chose tight fitting functions to accurately represent the time complexity
+                            of a given algorithm.</p>
+
+                        <h3>O(1) Time (Constant Time)</h3>
+                        <p>When describing an algorithm which has O(1) time we say that algorithm runs in constant time.
+                            It isn't too difficult to come up with some examples. Accessing an element within and array
+                            is a simple example of something that takes constant time. All that constant time really
+                            means is that regardless of the number of inputs, the operation will take some constant c
+                            time. Accessing an element in a hash map is said to be constant time (given we ignore the
+                            possibility of collisions). The time complexity of a hash map is a good example to look at
+                            in terms of our previously defined formulas. Let's say that we are hashing an integer to
+                            index into an array of strings. The hashing itself may take a certain number of steps, for
+                            this example lets say it takes 6 steps to hash our integer. now if we apply our formula
+                            where f(n) = 6 and g(n) = 1 we see that 6 ≤ c*1 for some value c. It doesn't matter what
+                            value of c actually makes this true, in this case there are infinite values you could choose
+                            from but for the sake of simplicity let's say c = 10. 6 ≤ 10 on some interval k ≤ n (our
+                            interval in this case is all reals as our condition holds true regardless of n). Now you can
+                            hopefully see how our formula looks in action.</p>
+
+                        <h3>O(n) Time (Linear Time)</h3>
+                        <p>When we describe an algorithm to be O(n) we say it is of linear time. Linear time algorithms
+                            are those that must visit every input element once in their worst case scenario. Where O(1)
+                            algorithms have the same best and worst case O(n) algorithms often do not. For example, an
+                            algorithm that searches for a value in a given array is O(n), at its worst case the value
+                            being searched for is the last element and we must visit every other element to find it,
+                            that is what makes this algorithm O(n). The same algorithm is Ω(1), as in the best case
+                            scenario the first element is the value we are searching for and we don't need to continue
+                            searching once we have found it. Some O(n) algorithms are also Ω(n), for example if we want
+                            to sum the values in an array we must visit every element no matter what. This is to say
+                            that taking the sum of an array is Ω(n) and O(n). Let's look at a more interesting algorithm
+                            called: Kadane's algorithm, which finds the largest sum of any contiguous sub array within
+                            an array.
+                        <pre><code>
+                //Kadane's algorithm written in C
+                #include "limits.h"
+                #define max(a,b) (a > b) ? a : b
+    
+                //this algorithm does not work for empty arrays
+                int maxSubArray(int* mainArray, int n)
+                {
+                    int maxSum = INT_MIN;
+                    int currentSum = 0;
+                    for(int i = 0; i < n; i++)
+                    {
+                        currentSum = max(mainArray[i], currentSum + mainArray[i]);
+                        maxSum = max(maxSum, currentSum);
+                    }
+                    
+                    return maxSum;
+                }
+            </code></pre>
+                        Essentially what this algorithm does is loop over the main array and determine whether the
+                        element at a given position is greater than what the sum would be if that element were added to
+                        the sum. If the element is greater than the potential sum the current sum is updated to be that
+                        element otherwise the element is just added to the current sum. We then compare the max sum to
+                        the current sum just to check if the current sum is now the maximum. This algorithm is both O(n)
+                        and Ω(n) because it always loops over the entire array regardless.
+                </p>
+
+                <h3>O<math>
+                        <mo>(</mo>
+                        <msup>
+                            <mi>n</mi>
+                            <mn>2</mn>
+                        </msup>
+                        <mo>)</mo>
+                    </math> Time (Quadratic Time)</h3>
+                <p>When we describe an algorithm to be O<math>
+                        <mo>(</mo>
+                        <msup>
+                            <mi>n</mi>
+                            <mn>2</mn>
+                        </msup>
+                        <mo>)</mo>
+                    </math> we say it is of Quadratic time. The most naive algorithm that we could describe as of
+                    Quadratic time is a nested for loop that looks like such:
+                <pre><code>
+                //returns n*n
+                int quadraticTime(int n)
+                {
+                    int total = 0;
+                    for(int i = 0; i < n; i++)
+                    {
+                        for(int j = 0; j < n; j++)
+                        {
+                            total++;
+                        }
+                    }
+                    return total;
+                }
+            </code></pre>
+                In this example our operation is just incrementing a sum, but by looking at what that sum is we can see
+                that it is equal to <math>
+                    <msup>
+                        <mi>n</mi>
+                        <mn>2</mn>
+                    </msup>
+                </math>. Using some summation formulas we can get the same thing with pure math as such.
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <munderover accent='false' accentunder='false'>
+                        <mo>&#x2211;</mo>
+                        <mrow>
+                            <mi>i</mi>
+                            <mo> = </mo>
+                            <mn>1</mn>
+                        </mrow>
+                        <mi>n</mi>
+                    </munderover>
+                    <mfenced>
+                        <mrow>
+                            <munderover accent='false' accentunder='false'>
+                                <mo>&#x2211;</mo>
+                                <mrow>
+                                    <mi>j</mi>
+                                    <mo>=</mo>
+                                    <mn>1</mn>
+                                </mrow>
+                                <mi>n</mi>
+                            </munderover>
+                            <mn>1</mn>
+                        </mrow>
+                    </mfenced>
+                    <mo>&#xA0;</mo>
+                    <mo> = </mo>
+                    <munderover accent='false' accentunder='false'>
+                        <mo>&#x2211;</mo>
+                        <mrow>
+                            <mi>i</mi>
+                            <mo> = </mo>
+                            <mn>1</mn>
+                        </mrow>
+                        <mi>n</mi>
+                    </munderover>
+                    <mi>n</mi>
+                    <mo>&#xA0;</mo>
+                    <mo>=</mo>
+                    <mi>n</mi>
+                    <mo>&#xb7;</mo>
+                    <mi>n</mi>
+                    <mo>&#xA0;</mo>
+                    <mo> = </mo>
+                    <msup>
+                        <mi>n</mi>
+                        <mn>2</mn>
+                    </msup>
+                </math>
+                . Generally an algorithm with two nested loops will be at worst quadratic time. Here is another
+                algorithm that I at first had a hard time seeing as O<math>
+                    <mo>(</mo>
+                    <msup>
+                        <mi>n</mi>
+                        <mn>2</mn>
+                    </msup>
+                    <mo>)</mo>
+                </math>:
+                <pre><code>
+                //returns ((n*n) + n)/2
+                int quadraticTime(int n)
+                {
+                    int total = 0;
+                    for(int i = 0; i < n; i++)
+                    {
+                        for(int j = i; j < n; j++)
+                        {
+                            total++;
+                        }
+                    }
+                    return total;
+                }
+            </code></pre>
+                You can tell this is O<math>
+                    <mo>(</mo>
+                    <msup>
+                        <mi>n</mi>
+                        <mn>2</mn>
+                    </msup>
+                    <mo>)</mo>
+                </math> based purely on the nested for loops but how can we be sure mathematically. Well using some
+                formulas of summation we find that <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <munderover accent='false' accentunder='false'>
+                        <mo>&#x2211;</mo>
+                        <mrow>
+                            <mi>i</mi>
+                            <mo>=</mo>
+                            <mn>1</mn>
+                        </mrow>
+                        <mi>n</mi>
+                    </munderover>
+                    <mfenced>
+                        <mrow>
+                            <munderover accent='false' accentunder='false'>
+                                <mo>&#x2211;</mo>
+                                <mrow>
+                                    <mi>j</mi>
+                                    <mo>=</mo>
+                                    <mi>i</mi>
+                                </mrow>
+                                <mi>n</mi>
+                            </munderover>
+                            <mn>1</mn>
+                        </mrow>
+                    </mfenced>
+                    <mo>=</mo>
+                    <munderover accent='false' accentunder='false'>
+                        <mo>&#x2211;</mo>
+                        <mrow>
+                            <mi>i</mi>
+                            <mo>=</mo>
+                            <mn>1</mn>
+                        </mrow>
+                        <mi>n</mi>
+                    </munderover>
+                    <mfenced>
+                        <mrow>
+                            <munderover accent='false' accentunder='false'>
+                                <mo>&#x2211;</mo>
+                                <mrow>
+                                    <mi>j</mi>
+                                    <mo>=</mo>
+                                    <mn>1</mn>
+                                </mrow>
+                                <mi>i</mi>
+                            </munderover>
+                            <mn>1</mn>
+                        </mrow>
+                    </mfenced>
+                    <mo>=</mo>
+                    <munderover accent='false' accentunder='false'>
+                        <mo>&#x2211;</mo>
+                        <mrow>
+                            <mi>i</mi>
+                            <mo>=</mo>
+                            <mn>1</mn>
+                        </mrow>
+                        <mi>n</mi>
+                    </munderover>
+                    <mi>n</mi>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mrow>
+                            <mi>n</mi>
+                            <mo>(</mo>
+                            <mi>n</mi>
+                            <mo>+</mo>
+                            <mn>1</mn>
+                            <mo>)</mo>
+                        </mrow>
+                        <mn>2</mn>
+                    </mfrac>
+                </math> and with this equation we can guaranteee that the given function is infact O<math>
+                    <mo>(</mo>
+                    <msup>
+                        <mi>n</mi>
+                        <mn>2</mn>
+                    </msup>
+                    <mo>)</mo>
+                </math>. I'd like to take a look at an algorithm that may be encountered in real life, this algorithm
+                being "Bubble Sort". Bubble sort has a quadratic worst case time complexity and can be implemented as
+                such:
+                <pre><code>
+                    //The Bubble Sort algorithm written in C
+                    #include "stdbool.h"
+                    #define swap(a, b, type) {type c = a; a = b; b = c;}
+                    
+                    void bubbleSort(int *arr, int n)
+                    {
+                        bool sorted = false;
+                        while(!sorted)
+                        {
+                            sorted = true;
+                            for(int i = 0; i < n-1; i++)
+                            {
+                                if(arr[i] > arr[i+1])
+                                {
+                                    swap(arr[i],arr[i+1], int);
+                                    sorted = false;
+                                }
+                            }
+                        }
+                    }
+            </code></pre>
+                The way bubble sort works is by looping over an array a swapping pairs that are in the wrong order until
+                it is properly sorted. This algorithm is O<math>
+                    <mo>(</mo>
+                    <msup>
+                        <mi>n</mi>
+                        <mn>2</mn>
+                    </msup>
+                    <mo>)</mo>
+                </math> which you can probably tell by looking at the nested loops, however, it may be helpful to define
+                the number of comparsions this algorithm does as a function just to be sure. A worst case scenario for
+                the "Bubble Sort" algorithm is that the array is in reverse order. In reverse order we can look at each
+                loop through the array as simply moving the first element to its given position by swapping it with the
+                next element and then comparing the remaining elements which should already be in order. In order to get
+                the number of comparisons as a whole we should look at how many comparisons there are in each loop of
+                the array. For each loop we need to compare n elements with the element following them we do n-1
+                comparisons per loop as the last element does not have a following element to be compared to. The next
+                thing to do is find out how many times we do n-1 comparisons, if we think back to our depiction of each
+                loop as moving an element across the array we will note that this needs to be done n-1 times as each
+                element must be moved except the last one which will fall into place when swap with its neighbor. It is
+                important to be careful, however, because we still need to loop over the sorted array once in order to
+                verify that it is indeed sorted. This means that we do n-1 comparisons a total of n times or in other
+                words: our algorithm does <math>
+                    <msup>
+                        <mi>n</mi>
+                        <mn>2</mn>
+                    </msup>
+                </math> - n comparisons. From here it is easy to verify that "Bubble Sort" is O<math>
+                    <mo>(</mo>
+                    <msup>
+                        <mi>n</mi>
+                        <mn>2</mn>
+                    </msup>
+                    <mo>)</mo>
+                </math>. It is noted that "Bubble Sort" is O<math>
+                    <mo>(</mo>
+                    <msup>
+                        <mi>n</mi>
+                        <mn>2</mn>
+                    </msup>
+                    <mo>)</mo>
+                </math> in the number of swaps done as well. I wont go as deep into swaps but the idea around
+                calculating the number of swaps is similar to the second example of quadratic time. On each loop over
+                the array we swap one less element. Because we only need to do n-1 swaps at the most and the nth loop
+                over the array doesn't contain any swaps we can substitute n for (n-1) in our equation from the second
+                example of quadratic time and verify the number of swaps is O<math>
+                    <mo>(</mo>
+                    <msup>
+                        <mi>n</mi>
+                        <mn>2</mn>
+                    </msup>
+                    <mo>)</mo>
+                </math>.
+        </p>
+        <h3>O<math>
+                <mo>(</mo>
+                <msup>
+                    <mi>n</mi>
+                    <mn>3</mn>
+                </msup>
+                <mo>)</mo>
+            </math> Time (Cubic Time)</h3>
+        <p>When we describe an algorithm to be O<math>
+                <mo>(</mo>
+                <msup>
+                    <mi>n</mi>
+                    <mn>3</mn>
+                </msup>
+                <mo>)</mo>
+            </math> we say it is of cubic time. Cubic time algorithms often involve 3 nested loop and thus follow a
+            similiar pattern to quadratic algorithms. You can follow the same proccess of using summation that we used
+            for quadratic time in order to prove an algorithm is of cubic time. The most obvious example of a cubic time
+            algorithm would look something like this:
+        <pre><code>
+                //returns n*n*n
+                int CubicTime(int n)
+                {
+                    int total = 0;
+                    for(int i = 0; i < n; i++)
+                    {
+                        for(int j = 0; j < n; j++)
+                        {
+                            for(int k = 0; k < n; k++)
+                            {
+                                total++;
+                            }
+                        }
+                    }
+                    return total;
+                }
+            </code></pre>
+        We can prove this mathematically by using nested summation and some summation formulas in order to decompose our
+        algorithm into a function of n. Mathematically that looks like this <math
+            xmlns="http://www.w3.org/1998/Math/MathML">
+            <munderover accent='false' accentunder='false'>
+                <mo>&#x2211;</mo>
+                <mrow>
+                    <mi>i</mi>
+                    <mo>&#xA0;</mo>
+                    <mo>=</mo>
+                    <mn>1</mn>
+                </mrow>
+                <mi>n</mi>
+            </munderover>
+            <munderover accent='false' accentunder='false'>
+                <mo>&#x2211;</mo>
+                <mrow>
+                    <mi>j</mi>
+                    <mo>=</mo>
+                    <mn>1</mn>
+                </mrow>
+                <mi>n</mi>
+            </munderover>
+            <munderover accent='false' accentunder='false'>
+                <mo>&#x2211;</mo>
+                <mrow>
+                    <mi>k</mi>
+                    <mo>=</mo>
+                    <mn>1</mn>
+                </mrow>
+                <mi>n</mi>
+            </munderover>
+            <mn>1</mn>
+            <mo>=</mo>
+            <munderover accent='false' accentunder='false'>
+                <mo>&#x2211;</mo>
+                <mrow>
+                    <mi>i</mi>
+                    <mo>=</mo>
+                    <mn>1</mn>
+                </mrow>
+                <mi>n</mi>
+            </munderover>
+            <munderover accent='false' accentunder='false'>
+                <mo>&#x2211;</mo>
+                <mrow>
+                    <mi>j</mi>
+                    <mo>=</mo>
+                    <mn>1</mn>
+                </mrow>
+                <mi>n</mi>
+            </munderover>
+            <mi>n</mi>
+            <mo>=</mo>
+            <munderover accent='false' accentunder='false'>
+                <mo>&#x2211;</mo>
+                <mrow>
+                    <mi>i</mi>
+                    <mo>=</mo>
+                    <mn>1</mn>
+                </mrow>
+                <mi>n</mi>
+            </munderover>
+            <msup>
+                <mi>n</mi>
+                <mn>2</mn>
+            </msup>
+            <mo>=</mo>
+            <msup>
+                <mi>n</mi>
+                <mn>3</mn>
+            </msup>
+        </math>. Even without thinking about the math you can probably see why this algorithm is O<math>
+            <mo>(</mo>
+            <msup>
+                <mi>n</mi>
+                <mn>3</mn>
+            </msup>
+            <mo>)</mo>
+        </math>. Let's look at an example with an of an algorithm that you may encounter in the wild. This algorithm is
+        the Naive approach to matrix multiplication of two n x n sized matrices and it is probably the first thing most
+        computer scientists think of when they hear O<math>
+            <mo>(</mo>
+            <msup>
+                <mi>n</mi>
+                <mn>3</mn>
+            </msup>
+            <mo>)</mo>
+        </math> algorithm. Naive Matrix Multiplication can be implemented as such:
+        <pre><code>
+    #define transformIndex(x,y,n) (y*n + x) //transform index of 2D array into 1D array
+
+    typedef struct
+    {
+        int n;
+        double *content; //content = double[n*n]
+    } matrix;
+
+    //A and B are expected to be the same size
+    matrix matMul(matrix *A, matrix *B)
+    {
+        int n = A->n;
+        double *outputContent = calloc(sizeof(double) * n * n);
+        matrix out = {n, outputContent};
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                for(int k = 0; k < n; k++)
+                {
+                    double productAB = A->content[transformIndex(i,k,n)]*B->content[transformIndex(k,j,n)];
+                    outputContent[transformIndex(i,j,n)] += productAB;
+                }
+            }
+        }
+    }
+            </code></pre>
+        It is pretty clear that this is an O<math>
+            <mo>(</mo>
+            <msup>
+                <mi>n</mi>
+                <mn>3</mn>
+            </msup>
+            <mo>)</mo>
+        </math> operation just by looking at the nested for loop. We can also reconcile where this comes from by
+        recalling that matrix multiplication is calculated for n*n elements and that to calculate each element you must
+        do n operations. It is much easier to get an intution around this if you imagine the B array being rotated and
+        then slid down the A array as is common in most animations representing this operation.
+        </p>
+
+        <h3>O(Log(n)) Time (Logarithmic Time)</h3>
+        <p>Logarithmic time is a big part of the reason I decided to write this article. Getting atleast a half decent
+            intuition around the other time complexities that have so far been discussed in this article isn't too
+            difficult but O(Log(n)) time just felt bizarre. Where does Log(n) even come from and what is its logarithmic
+            base? Lets focus on the second question first because I think once we define what our graph even looks like
+            it will be much easier to get an intuition as to where this time complexity comes from.</p>
+    </div>
+</body>
+
+</html>

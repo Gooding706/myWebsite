@@ -1,0 +1,2 @@
+Hello welcome to my website
+don't be intimidated this isn't a real console. I'm a big fan of retro computing so I built my website to "mimic" the unix shell. For a list of commands you can use to navigate this site type "help"
